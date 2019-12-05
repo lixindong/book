@@ -19,11 +19,15 @@ script:
 
 after_script:
   - cd _book
-  - git init
-  - git remote add origin https://${GH_REF}
+  - git config user.name "${USER_NAME}"
+  - git config user.email "${USER_EMAIL}"
   - git add .
-  - git commit -m "Updated By Travis-CI With Build  For Github Pages"
-  - git push --force --quiet "https://${TOKEN}@${GH_REF}" master:gh-pages
+  - git commit -m "Updated By Travis-CI With Build  For Github Page"
+  - git push --force --quiet "https://${test_token}@${GH_REF}" master:${P_BRANCH}
+  # - git remote add origin https://${GH_REF}
+  # - git add .
+  # - git commit -m "Updated By Travis-CI With Build  For Github Pages"
+  # - git push --force --quiet "https://${TOKEN}@${GH_REF}" master:gh-pages
 
 branches:
   only:
