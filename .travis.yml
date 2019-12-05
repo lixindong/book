@@ -1,0 +1,39 @@
+language: node_js
+node_js:
+  - "10"
+cache: npm
+
+notifications:
+  email:
+    recipients:
+      - 958501820@qq.com # 设置通知邮件
+    on_success: change
+    on_failure: always
+
+install:
+  - npm install -g gitbook-cli
+  - gitbook install
+
+script:
+  - gitbook build
+
+after_script:
+  - cd _book
+  - git init
+  - git config user.name "${USER_NAME}"
+  - git config user.email "${USER_EMAIL}"
+  - git add .
+  - git commit -m "Updated By Travis-CI With Build  For Github Page"
+  - git push --force --quiet "https://${test_token}@${GH_REF}" master:${P_BRANCH}
+  # - git remote add origin https://${GH_REF}
+  # - git add .
+  # - git commit -m "Updated By Travis-CI With Build  For Github Pages"
+  # - git push --force --quiet "https://${TOKEN}@${GH_REF}" master:gh-pages
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    - GH_REF=github.com/lixindong/book.git # 设置 github 地址
